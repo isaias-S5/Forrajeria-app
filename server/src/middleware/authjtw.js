@@ -1,4 +1,4 @@
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../helpers/config.js";
 import { pool } from "../helpers/db.js";
 

@@ -97,7 +97,7 @@ export const getSaleDetails = async (req, res) => {
         SaleDetails.* ,
         Product.*
       FROM SaleDetails
-      INNER JOIN Product ON Product.ProductID = saleDetails.ProductID
+      INNER JOIN Product ON Product.productID = SaleDetails.productID
       WHERE SaleID = ?
       `,
       [id]

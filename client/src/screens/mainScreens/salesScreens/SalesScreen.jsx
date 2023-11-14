@@ -111,6 +111,7 @@ const SalesScreen = () => {
                     onPress={() => handleDeleteSale(sale.saleID)}
                   />
                 )}
+
                 {sale.canceled == 0 && (
                   <Pressable style={styles.cancelSaleContainer}>
                     <Pressable onPress={() => handleCancelSale(sale.saleID)}>
@@ -118,6 +119,9 @@ const SalesScreen = () => {
                     </Pressable>
                   </Pressable>
                 )}
+                <Pressable onPress={() => handleCancelSale(sale.saleID)}>
+                      <Text>Cancelar Venta</Text>
+                    </Pressable>
               </>
             )}
           </Pressable>

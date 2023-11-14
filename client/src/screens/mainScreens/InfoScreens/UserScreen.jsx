@@ -32,7 +32,6 @@ export default function UserScreen() {
     }
     await updateUser(user.userID, { role: newRole }, token);
     setHaveChange(!haveChange);
-    console.log("admin maker or unmaker");
   };
 
   const handleDeleteUser = async (id) => {

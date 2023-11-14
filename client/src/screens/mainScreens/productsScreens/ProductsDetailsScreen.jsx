@@ -16,7 +16,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { AuthContext } from "../../../contexts/AuthContext.jsx";
 import { createProduct, updateProduct } from "../../../api/api.js";
 import { useNavigation } from "@react-navigation/native";
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from "expo-image-picker";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -93,7 +93,6 @@ const ProductsDetailsScreen = ({ route }) => {
       productUnit,
       productPrice,
       productStock,
-      productPhoto,
       supplierId,
       categoryId,
     } = formData;
@@ -136,21 +135,10 @@ const ProductsDetailsScreen = ({ route }) => {
       hasError = true;
     }
 
-    // if (!supplierId) {
-    //   newErrors.supplierError = "Seleccione un proveedor.";
-    //   hasError = true;
-    // }
-
-    // if (!categoryId) {
-    //   newErrors.categoryError = "Seleccione una categoría.";
-    //   hasError = true;
-    // }
-
     setErrors(newErrors);
 
     return hasError;
   };
-
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -163,8 +151,8 @@ const ProductsDetailsScreen = ({ route }) => {
 
     console.log(result);
 
-    if (!result.cancelled) {
-      setFormData({...formData, productPhoto: result.uri}); // Actualiza el estado con la imagen seleccionada
+    if (!result.canceled) {
+      setFormData({ ...formData, productPhoto: result.uri });
     }
   };
 
@@ -188,6 +176,7 @@ const ProductsDetailsScreen = ({ route }) => {
       setHaveChange(!haveChange);
     }
   };
+  console.log(formData.productPhoto);
 
   return (
     <View style={styles.container}>
@@ -197,10 +186,11 @@ const ProductsDetailsScreen = ({ route }) => {
         enabled
       >
         <View style={styles.header}>
-        <Image
+          <Image
             source={
-              formData.productPhoto 
-                ? { uri: formData.productPhoto } : NonProductImage // Si no hay ninguna imagen, muestra la imagen predeterminada
+              formData.productPhoto
+                ? { uri: formData.productPhoto }
+                : NonProductImage // Si no hay ninguna imagen, muestra la imagen predeterminada
             }
             style={[
               styles.image,

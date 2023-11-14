@@ -7,7 +7,7 @@ import {
   Pressable,
   Image,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { FontAwesome5, MaterialIcons, Fontisto } from "@expo/vector-icons";
 import { GlobalDataContext } from "../../../contexts/GlobalDataContext";
@@ -21,7 +21,11 @@ import { useNavigation } from "@react-navigation/native";
 const HomeScreen = () => {
   const { userData } = useContext(AuthContext);
   const { products, sales } = useContext(GlobalDataContext);
+  const [newUserData, setnewUserData] = useState([])
 
+  useEffect(() => {
+    setnewUserData(userData)
+  },[userData])
   const navigation = useNavigation();
 
   const currentDate = moment(new Date()).format("YYYY-MM-DD");

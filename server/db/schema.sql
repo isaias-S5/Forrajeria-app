@@ -27,9 +27,10 @@
   productUnit ENUM('L', 'KG', 'UD') NOT NULL DEFAULT 'UD',
   productPrice DECIMAL(10, 2) NOT NULL,
   productStock DECIMAL(10,2) NOT NULL,
-  productPhoto VARCHAR(255),
+  productPhoto TEXT,
   supplierID INT,
   categoryID INT,
+  deleted TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (productID),
   FOREIGN KEY (supplierID) REFERENCES Supplier(supplierID),
   FOREIGN KEY (categoryID) REFERENCES Category(categoryID)
@@ -57,7 +58,7 @@
   saleDate DATETIME NOT NULL,
   totalSale DECIMAL(10, 2) NOT NULL,
   employeeID INT NOT NULL,
-  canceled BIT,
+  canceled TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (saleID),
   FOREIGN KEY (employeeID) REFERENCES User(userID)
   );

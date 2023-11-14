@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { getSaleDetails } from "../../../api/api";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -11,26 +18,28 @@ import ProductCard from "../../../components/mainComponents/ProductCard";
 import moment from "moment";
 import { useNavigation } from "@react-navigation/native";
 const SaleDetailsScreen = ({ route }) => {
-  const { token } = useContext(AuthContext);
-  const { products } = useContext(GlobalDataContext);
+  const { token, userData } = useContext(AuthContext);
+  const { products, sales } = useContext(GlobalDataContext);
   const [saleDetails, setSaleDetails] = useState([]);
   const [productQuantity, setProductQuantity] = useState(0);
-  const navigation = useNavigation()
+  const [isLoading, setisLoading] = useState(false);
+  const navigation = useNavigation();
   const saleData = route.params.saleData;
-
-  console.log(saleData);
 
   useEffect(() => {
     HandleSetSaleDetails();
   }, []);
 
   const HandleSetSaleDetails = async () => {
+    setisLoading(true);
     await getSaleDetails(saleData.saleID, token, setSaleDetails);
+    setisLoading(false);
   };
 
   useEffect(() => {
     updateProductQuantity();
   }, [saleDetails, products]);
+
 
   const updateProductQuantity = () => {
     let quantity = 0;
@@ -46,16 +55,39 @@ const SaleDetailsScreen = ({ route }) => {
     setProductQuantity(quantity);
   };
 
+  if (isLoading) {
+    return (
+      <>
+        {isLoading && (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#fff8ed",
+            }}
+          >
+            <ActivityIndicator size={"large"} />
+          </View>
+        )}
+      </>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#ffe3a7", "#ff930e"]} style={styles.header}>
-        <Feather
-          name="edit"
-          size={28}
-          color="orange"
-          style={{ position: "absolute", top: 0, right: 0 }}
-          onPress={() => navigation.navigate("EditSaleScreen", {saleData: saleData})}
-        />
+        {userData.role === "Administrador" && (
+          <Feather
+            name="edit"
+            size={28}
+            color="orange"
+            style={{ position: "absolute", top: 0, right: 0 }}
+            onPress={() =>
+              navigation.navigate("EditSaleScreen", { saleData: saleData })
+            }
+          />
+        )}
         <View style={styles.saleTotalContainer}>
           <Text style={styles.saleTotalText}>${saleData.totalSale}</Text>
           <Text style={styles.empleoyeeNameText}>{saleData.realName}</Text>

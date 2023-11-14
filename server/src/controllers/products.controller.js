@@ -4,14 +4,7 @@ export const getProducts = async (req, res) => {
   try {
     const [rows] = await pool.query(
       `
-      SELECT  
-        Product.*,
-        Category.*,
-        Supplier.supplierID, Supplier.supplierName
-      FROM 
-        Product 
-      INNER JOIN Supplier ON Product.SupplierID = Supplier.SupplierID
-      INNER JOIN Category ON Product.CategoryID = Category.CategoryID
+      SELECT * FROM Product
       `
     );
     res.json(rows);
@@ -116,7 +109,7 @@ export const updateProduct = async (req, res) => {
 
     const [result] = await pool.query(
       `
-      UPDATE product SET 
+      UPDATE Product SET 
         ProductName = IFNULL(?, ProductName), 
         ProductDescription = IFNULL(?, ProductDescription), 
         ProductUnit = IFNULL(?, ProductUnit), 

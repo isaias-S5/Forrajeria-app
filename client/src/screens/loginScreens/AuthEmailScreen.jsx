@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     color: '#7f220f',
     fontSize: 30,
     fontWeight: 'bold',
-    marginTop: 30, // Espaciado para separar el título del icono
+    marginTop: 30, 
     textAlign: 'left',
   },
   iconContainer: {
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   iconGradient: {
     width: 140,
     height: 140,
-    borderRadius: 70, // Radio igual a la mitad del tamaño
+    borderRadius: 70, 
     alignItems: 'center',
     justifyContent: 'center',
   },

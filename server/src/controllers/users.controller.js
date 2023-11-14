@@ -35,7 +35,7 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const id = req.params.userId;
-    const { username, realName, password, userPhone, userPhoto, role, active } = req.body;
+    const { userName, realName, password, userPhone, userPhoto, role, active } = req.body;
 
 
     const [result] = await pool.query(
@@ -49,7 +49,7 @@ export const updateUser = async (req, res) => {
         Role = IFNULL(?, Role),
         Active = IFNULL(?, Active)  
       WHERE UserID = ?`,
-      [realName, username, password, userPhone, userPhoto, role, active, id]
+      [realName, userName, password, userPhone, userPhoto, role, active, id]
     );
 
     if (result.affectedRows === 0) {

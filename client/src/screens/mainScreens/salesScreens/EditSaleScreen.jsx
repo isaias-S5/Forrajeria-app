@@ -41,6 +41,7 @@ const EditSaleScreen = ({ route }) => {
   const [isDateModalVisible, setIsDateModalVisible] = useState(false);
   const [isModalSearchVisible, setIsModalSearchVisible] = useState(false);
   const [isModalDetailsVisible, setIsModalDetailsVisible] = useState(false);
+  const [isLoading, setisLoading] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false);
   const [saleDetailsData, setSaleDetailsData] = useState([]);
 
@@ -57,7 +58,9 @@ const EditSaleScreen = ({ route }) => {
   }, [haveChange]);
 
   const handleSetSaleDetails = async () => {
+    setisLoading(true)
     await getSaleDetails(saleData.saleID, token, setSaleDetailsData);
+    setisLoading(false)
   };
 
   const onDateChange = (date) => {
@@ -103,6 +106,25 @@ const EditSaleScreen = ({ route }) => {
   const handleEditSale = async () => {
     await updateSale(saleData.saleID, newSaleData, token)
     setHaveChange(!haveChange)
+  }
+
+  if (isLoading){
+    return(
+      <>
+      {isLoading && (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#fff8ed",
+          }}
+        >
+          <ActivityIndicator size={"large"} />
+        </View>
+      )}
+      </>
+    )
   }
 
   return (
@@ -253,7 +275,10 @@ const EditSaleScreen = ({ route }) => {
 
         <Pressable
         onPress={() => handleEditSale()}
-         style={styles.saveButton}>
+        style={({ pressed }) => [
+          styles.saveButton,
+          pressed && { opacity: 0.7, backgroundColor: "#FFA500" }, // Cambia el color al presionar
+        ]}>
           <Text style={styles.saveButtonText}>Guardar</Text>
         </Pressable>
 

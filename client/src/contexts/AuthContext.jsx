@@ -1,20 +1,27 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { GlobalDataContext } from "./GlobalDataContext";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const API_URL = "http://192.168.100.152:3000/api/auth";
 
-  const [isLoading, setIsLoading] = useState(true); // Nuevo estado para la pantalla de carga
+  const [isLoading, setIsLoading] = useState(true);
+  const [haveChange, setHaveChange] = useState(false);
   const [userData, setUserData] = useState({});
   const [token, setToken] = useState(null);
 
   useEffect(() => {
     loadUserData();
   }, []);
+
+  useEffect(() => {
+    console.log('it has changed from configuration')
+    loadUserData();
+  }, [haveChange]);
 
   const loadUserData = async () => {
     try {
@@ -151,16 +158,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
   const resetPassword = async (email, password) => {
     try {
       setIsLoading(true);
-      const response = await axios.put(
-        `${API_URL}/changePassword/${email}`,
-        {
-          password: password,
-        }
-      );
+      const response = await axios.put(`${API_URL}/changePassword/${email}`, {
+        password: password,
+      });
 
       if (response.data.error) {
         Toast.show({
@@ -222,6 +225,8 @@ export const AuthProvider = ({ children }) => {
         isLoading,
         setIsLoading,
         resetPassword,
+        haveChange,
+        setHaveChange,
       }}
     >
       {children}

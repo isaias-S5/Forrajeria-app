@@ -22,8 +22,7 @@ import { useNavigation } from "@react-navigation/native";
 const windowWidth = Dimensions.get("window").width;
 
 const ConfigurationScreen = () => {
-  const { userData, logout, token } = useContext(AuthContext);
-  const { users, haveChange, setHaveChange } = useContext(GlobalDataContext);
+  const { userData, logout, token, haveChange, setHaveChange, setIsLoading  } = useContext(AuthContext);
 
   const navigation = useNavigation()
 
@@ -52,9 +51,11 @@ const ConfigurationScreen = () => {
   };
 
   const handleSave = async () => {
+    setIsLoading(true)
     await updateUser(userData.userID, newUserProfile, token);
     setHaveChange(!haveChange);
     setIsEditing(false);
+    setIsLoading(false)
   };
 
   return (

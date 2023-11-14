@@ -110,7 +110,6 @@ export const updateSale = async (id, data, token, products = []) => {
 };
 
 export const getSaleDetails = async (id, token, setSalesDetails) => {
-  console.log(token);
   const response = await axios.get(`${API_URL}/sales/${id}/saleDetails`, {
     headers: {
       Authorization: `Bearer ${token}`,

@@ -197,7 +197,10 @@ const ProductsScreen = () => {
                 size={windowWidth * 0.12}
                 color="#ffedd3"
                 style={styles.icons}
-                onPress={() => navigation.navigate("categoryScreen")}
+                onPress={() => {
+                  navigation.navigate("categoryScreen")
+                  setisAdding(false)
+                }}
               />
 
               <MaterialIcons
@@ -205,7 +208,10 @@ const ProductsScreen = () => {
                 size={windowWidth * 0.12}
                 color="#ffedd3"
                 style={styles.icons}
-                onPress={() => navigation.navigate("supplierScreen")}
+                onPress={() => {
+                  setisAdding(false)
+                  navigation.navigate("supplierScreen")}
+                }
               />
 
               <MaterialIcons
@@ -213,11 +219,13 @@ const ProductsScreen = () => {
                 size={windowWidth * 0.12}
                 color="#ffedd3"
                 style={styles.icons}
-                onPress={() =>
+                onPress={() =>{
+                  setisAdding(false)
                   navigation.navigate("productsDetailsScreen", {
                     productInfo: {},
                     originScreen: "addProduct",
                   })
+                }
                 }
               />
             </View>
